@@ -9,6 +9,8 @@ class SampleNote(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
+        verbose_name = "Sample note"
+        verbose_name_plural = "Sample notes"
 
     def __str__(self) -> str:
         return self.title

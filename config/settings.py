@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -36,6 +37,7 @@ CSRF_TRUSTED_ORIGINS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,6 +47,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'sample_crud',
+    'core',
+    'branding',
 ]
 
 MIDDLEWARE = [
@@ -126,6 +130,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -135,3 +142,24 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
+
+CORS_ALLOW_CREDENTIALS = True
+
+# django-jazzmin (admin UI). See https://django-jazzmin.readthedocs.io/
+JAZZMIN_SETTINGS = {
+    "site_title": "FullStack Admin",
+    "site_header": "Admin",
+    "site_brand": "FullStack",
+    "welcome_sign": "Development admin (use strong passwords in production).",
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "hide_apps": [],
+    "hide_models": [],
+    "order_with_respect_to": ["auth", "branding", "sample_crud"],
+}
+
+# Shared Python library (nested repo): add src/ to path when present
+_CODE_BASE = BASE_DIR / "python_code_base" / "src"
+if _CODE_BASE.is_dir():
+    sys.path.insert(0, str(_CODE_BASE))
+
